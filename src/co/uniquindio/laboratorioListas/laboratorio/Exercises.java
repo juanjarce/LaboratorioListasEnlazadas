@@ -11,34 +11,34 @@ public class Exercises {
     public static void main(String args[]) {
 
         LinkedList<Integer> lista = new LinkedList<>();
-        lista.agregarFinal(1);
-        lista.agregarFinal(2);
-        lista.agregarFinal(3);
-        lista.agregarFinal(4);
-        lista.agregarFinal(5);
+        lista.addLast(1);
+        lista.addLast(2);
+        lista.addLast(3);
+        lista.addLast(4);
+        lista.addLast(5);
 
-        //Se muestra la lista enlazada simple con numeros en consola
-        System.out.println("Lista Simple: ");
-        lista.imprimirLista();
+        //The simple linked list with numbers is shown in the console
+        System.out.println("Linked List: ");
+        lista.printList();
 
-        //1. Obtener los números de las posiciones impares de una lista enlazada simple de números
-        ArrayList<Integer> resultado = devolverValorPosImpares(lista);
-        System.out.println("Números en posiciones impares: " + resultado);
+        //1. Get the numbers in the odd positions of a simple linked list of numbers
+        ArrayList<Integer> result = returnValuePosOdd(lista);
+        System.out.println("Numbers in odd positions: " + result);
 
     }
 
-    //1. Obtener los números de las posiciones impares de una lista enlazada simple de números
-    public static ArrayList<Integer> devolverValorPosImpares(LinkedList<Integer> lista) {
-        //Se crea una lista para almacenar los valores de las posiciones impares de la lista enlazada
+    //1. Get the numbers in the odd positions of a simple linked list of numbers
+    public static ArrayList<Integer> returnValuePosOdd(LinkedList<Integer> list) {
+        //A list is created to store the values ​​of the odd positions of the linked list
         ArrayList<Integer> posImpares = new ArrayList<Integer>();
-        //Indice para referencia de posicion
+        //Index for position reference
         int i = 0;
-        //Se crea una instancia del iterador para recorrer la lista
-        Iterator<Integer> iterator = lista.iterator();
+        //Instance of iterator for traveling the list
+        Iterator<Integer> iterator = list.iterator();
         while (iterator.hasNext()){
-            //Si el indice es impar se añade el valor del nodo a la lista
+            //If the index is odd, the value of the node is added to the list
             if(i%2==1){
-                posImpares.add(lista.obtenerValorNodo(i));
+                posImpares.add(list.getNodeValue(i));
             }
             iterator.next();
             i++;
@@ -46,5 +46,5 @@ public class Exercises {
         return posImpares;
     }
 
-    //2. Obtener la lista de personas tengan cédula con cantidad de números par de una lista enlazada simple de personas.
+    //2. Obtain the list of people who have an ID with an even number of numbers from a simple linked list of people.
 }

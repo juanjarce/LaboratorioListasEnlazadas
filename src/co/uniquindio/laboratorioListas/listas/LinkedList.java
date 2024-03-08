@@ -3,320 +3,318 @@ package co.uniquindio.laboratorioListas.listas;
 import java.util.Iterator;
 
 class Node<T> {
-    T valor;
-    Node<T> siguiente;
+    T value;
+    Node<T> next;
 
     // Constructor
-    public Node(T valor) {
-        this.valor = valor;
-        this.siguiente = null;
+    public Node(T value) {
+        this.value = value;
+        this.next = null;
     }
 }
 
 public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
-    Node<T> cabeza;
+    Node<T> head;
 
     // Constructor
     public LinkedList() {
-        this.cabeza = null;
+        this.head = null;
     }
 
-    // Método para agregar un elemento al final de la lista
-    public void agregarFinal(T valor) {
-        Node<T> nuevoNodo = new Node<>(valor);
-        if (cabeza == null) {
-            cabeza = nuevoNodo;
+    // Method to add an element at the end of the list
+    public void addLast(T value) {
+        Node<T> newNode = new Node<>(value);
+        if (head == null) {
+            head = newNode;
         } else {
-            Node<T> actual = cabeza;
-            while (actual.siguiente != null) {
-                actual = actual.siguiente;
+            Node<T> current = head;
+            while (current.next != null) {
+                current = current.next;
             }
-            actual.siguiente = nuevoNodo;
+            current.next = newNode;
         }
     }
 
-    // Método para agregar un elemento al inicio de la lista
-    public void agregarInicio(T valor) {
-        Node<T> nuevoNodo = new Node<>(valor);
-        nuevoNodo.siguiente = cabeza;
-        cabeza = nuevoNodo;
+    // Method to add an element at the beginning of the list
+    public void addFirst(T value) {
+        Node<T> newNode = new Node<>(value);
+        newNode.next = head;
+        head = newNode;
     }
 
-    // Método para agregar un elemento en una posición específica
-    public void agregar(T valor, int posicion) {
-        if (posicion < 0) {
-            System.out.println("Posición inválida");
+    // Method to add an element at a specific position
+    public void add(T value, int position) {
+        if (position < 0) {
+            System.out.println("Invalid position");
             return;
         }
-        if (posicion == 0) {
-            agregarInicio(valor);
+        if (position == 0) {
+            addFirst(value);
             return;
         }
-        Node<T> nuevoNodo = new Node<>(valor);
-        Node<T> actual = cabeza;
-        for (int i = 0; i < posicion - 1 && actual != null; i++) {
-            actual = actual.siguiente;
+        Node<T> newNode = new Node<>(value);
+        Node<T> current = head;
+        for (int i = 0; i < position - 1 && current != null; i++) {
+            current = current.next;
         }
-        if (actual == null) {
-            System.out.println("Posición fuera de rango");
+        if (current == null) {
+            System.out.println("Position out of range");
             return;
         }
-        nuevoNodo.siguiente = actual.siguiente;
-        actual.siguiente = nuevoNodo;
+        newNode.next = current.next;
+        current.next = newNode;
     }
 
-    // Método para obtener el valor de un nodo en una posición específica
-    public T obtenerValorNodo(int posicion) {
-        Node<T> actual = cabeza;
-        for (int i = 0; i < posicion && actual != null; i++) {
-            actual = actual.siguiente;
+    // Method to get the value of a node at a specific position
+    public T getNodeValue(int position) {
+        Node<T> current = head;
+        for (int i = 0; i < position && current != null; i++) {
+            current = current.next;
         }
-        if (actual == null) {
-            System.out.println("Posición fuera de rango");
-            return null; // Valor por defecto para indicar error
+        if (current == null) {
+            System.out.println("Position out of range");
+            return null; // Default value to indicate error
         }
-        return actual.valor;
+        return current.value;
     }
 
-    // Método para obtener el nodo en una posición específica
-    public Node<T> obtenerNodo(int posicion) {
-        Node<T> actual = cabeza;
-        for (int i = 0; i < posicion && actual != null; i++) {
-            actual = actual.siguiente;
+    // Method to get the node at a specific position
+    public Node<T> getNode(int position) {
+        Node<T> current = head;
+        for (int i = 0; i < position && current != null; i++) {
+            current = current.next;
         }
-        return actual;
+        return current;
     }
 
-    // Método para obtener la posición de un nodo dado su valor
-    public int obtenerPosicionNodo(T valor) {
-        int posicion = 0;
-        Node<T> actual = cabeza;
-        while (actual != null) {
-            if (actual.valor.equals(valor)) {
-                return posicion;
+    // Method to get the position of a node given its value
+    public int getNodePosition(T value) {
+        int position = 0;
+        Node<T> current = head;
+        while (current != null) {
+            if (current.value.equals(value)) {
+                return position;
             }
-            actual = actual.siguiente;
-            posicion++;
+            current = current.next;
+            position++;
         }
-        return -1; // Valor por defecto para indicar que no se encontró el valor
+        return -1; // Default value to indicate not found
     }
 
-    // Método para verificar si la lista está vacía
-    public boolean estaVacia() {
-        return cabeza == null;
+    // Method to check if the list is empty
+    public boolean isEmpty() {
+        return head == null;
     }
 
-    // Método para eliminar el primer nodo de la lista
-    public void eliminarPrimero() {
-        if (cabeza != null) {
-            cabeza = cabeza.siguiente;
+    // Method to delete the first node of the list
+    public void deleteFirst() {
+        if (head != null) {
+            head = head.next;
         }
     }
 
-    // Método para eliminar el último nodo de la lista
-    public void eliminarUltimo() {
-        if (cabeza == null || cabeza.siguiente == null) {
-            cabeza = null;
+    // Method to delete the last node of the list
+    public void deleteLast() {
+        if (head == null || head.next == null) {
+            head = null;
         } else {
-            Node<T> actual = cabeza;
-            while (actual.siguiente.siguiente != null) {
-                actual = actual.siguiente;
+            Node<T> current = head;
+            while (current.next.next != null) {
+                current = current.next;
             }
-            actual.siguiente = null;
+            current.next = null;
         }
     }
 
-    // Método para eliminar un nodo dado su valor
-    public void eliminar(T valor) {
-        if (cabeza == null) {
+    // Method to delete a node given its value
+    public void delete(T value) {
+        if (head == null) {
             return;
         }
-        if (cabeza.valor.equals(valor)) {
-            cabeza = cabeza.siguiente;
+        if (head.value.equals(value)) {
+            head = head.next;
             return;
         }
-        Node<T> actual = cabeza;
-        while (actual.siguiente != null && !actual.siguiente.valor.equals(valor)) {
-            actual = actual.siguiente;
+        Node<T> current = head;
+        while (current.next != null && !current.next.value.equals(value)) {
+            current = current.next;
         }
-        if (actual.siguiente != null) {
-            actual.siguiente = actual.siguiente.siguiente;
+        if (current.next != null) {
+            current.next = current.next.next;
         }
     }
 
-    // Método para modificar el valor de un nodo en una posición específica
-    public void modificarNodo(int posicion, T nuevoValor) {
-        Node<T> nodo = obtenerNodo(posicion);
-        if (nodo != null) {
-            nodo.valor = nuevoValor;
+    // Method to modify the value of a node at a specific position
+    public void modifyNode(int position, T newValue) {
+        Node<T> node = getNode(position);
+        if (node != null) {
+            node.value = newValue;
         } else {
-            System.out.println("Posición fuera de rango");
+            System.out.println("Position out of range");
         }
     }
 
-    // Método para ordenar la lista utilizando el algoritmo de ordenación por inserción
-    public void ordenarLista() {
-        if (cabeza == null || cabeza.siguiente == null) {
-            return; // La lista ya está ordenada o vacía
+    // Method to sort the list using the insertion sort algorithm
+    public void sortList() {
+        if (head == null || head.next == null) {
+            return; // The list is already sorted or empty
         }
 
-        Node<T> nodoActual = cabeza.siguiente;
-        while (nodoActual != null) {
-            T valorActual = nodoActual.valor;
-            Node<T> nodoAnterior = cabeza;
-            Node<T> nodoIterador = cabeza;
+        Node<T> currentNode = head.next;
+        while (currentNode != null) {
+            T currentValue = currentNode.value;
+            Node<T> previousNode = head;
+            Node<T> iteratorNode = head;
 
-            while (nodoIterador != nodoActual) {
-                if (valorActual.compareTo(nodoIterador.valor) < 0) {
-                    // Si el valor actual es menor que el valor del nodo actual, intercambiarlos
-                    T temp = nodoIterador.valor;
-                    nodoIterador.valor = valorActual;
-                    valorActual = temp;
+            while (iteratorNode != currentNode) {
+                if (currentValue.compareTo(iteratorNode.value) < 0) {
+                    // If the current value is less than the value of the current node, swap them
+                    T temp = iteratorNode.value;
+                    iteratorNode.value = currentValue;
+                    currentValue = temp;
                 }
-                nodoIterador = nodoIterador.siguiente;
+                iteratorNode = iteratorNode.next;
             }
 
-            nodoActual.valor = valorActual;
-            nodoActual = nodoActual.siguiente;
+            currentNode.value = currentValue;
+            currentNode = currentNode.next;
         }
     }
 
-    // Método para imprimir la lista
-    public void imprimirLista() {
-        Node<T> actual = cabeza;
-        while (actual != null) {
-            System.out.print(actual.valor + " ");
-            actual = actual.siguiente;
+    // Method to print the list
+    public void printList() {
+        Node<T> current = head;
+        while (current != null) {
+            System.out.print(current.value + " ");
+            current = current.next;
         }
         System.out.println();
     }
 
-    // Método para borrar toda la lista
-    public void borrarLista() {
-        cabeza = null;
+    // Method to delete the entire list
+    public void deleteList() {
+        head = null;
     }
 
-    // Método para verificar si un índice es válido
-    private boolean indiceValido(int indice) {
-        return indice >= 0 && indice < size();
+    // Method to check if an index is valid
+    private boolean isValidIndex(int index) {
+        return index >= 0 && index < size();
     }
 
-    // Método para obtener el tamaño de la lista
+    // Method to get the size of the list
     private int size() {
         int size = 0;
-        Node<T> actual = cabeza;
-        while (actual != null) {
+        Node<T> current = head;
+        while (current != null) {
             size++;
-            actual = actual.siguiente;
+            current = current.next;
         }
         return size;
     }
 
-    //Metodo para invertir una lista enlazada
-    private void invertirListaEnlazada(){
-        if(cabeza == null || cabeza.siguiente == null ){
-            System.out.println("La lista no se puede invertir");
-        }
-        else{
-            invertirRecursivo(cabeza, null);
-        }
-    }
-
-    //Metodo para invertir una lista enlazada recursivamente
-    private void invertirRecursivo(Node<T> actual, Node<T> anterior) {
-        if(actual.siguiente==null){
-            cabeza = actual;
-            cabeza.siguiente = anterior;
-        }
-        else{
-            invertirRecursivo(actual.siguiente, actual);
-            actual.siguiente = anterior;
+    // Method to reverse a linked list
+    private void reverseLinkedList() {
+        if (head == null || head.next == null) {
+            System.out.println("The list cannot be reversed");
+        } else {
+            reverseRecursive(head, null);
         }
     }
 
-    //Metodo para recorrer una lista enlazada de forma recurisiva
-    public void recorrerRecursivo(Node nodo) {
-        // Verifica si el nodo actual no es nulo
-        if (nodo != null) {
-            // Imprime el valor del nodo actual
-            System.out.print(nodo.valor + " ");
-            // Llama recursivamente al método con el siguiente nodo
-            recorrerRecursivo(nodo.siguiente);
+    // Method to reverse a linked list recursively
+    private void reverseRecursive(Node<T> current, Node<T> previous) {
+        if (current.next == null) {
+            head = current;
+            head.next = previous;
+        } else {
+            reverseRecursive(current.next, current);
+            current.next = previous;
         }
     }
 
-    // Implementación del método iterator de la interfaz Iterable
+    // Method to traverse a linked list recursively
+    public void traverseRecursive(Node node) {
+        // Check if the current node is not null
+        if (node != null) {
+            // Print the value of the current node
+            System.out.print(node.value + " ");
+            // Recursively call the method with the next node
+            traverseRecursive(node.next);
+        }
+    }
+
+    // Implementation of the iterator method of the Iterable interface
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            private Node<T> actual = cabeza;
+            private Node<T> current = head;
 
             @Override
             public boolean hasNext() {
-                return actual != null;
+                return current != null;
             }
 
             @Override
             public T next() {
-                T valor = actual.valor;
-                actual = actual.siguiente;
-                return valor;
+                T value = current.value;
+                current = current.next;
+                return value;
             }
         };
     }
 
     public static void main(String[] args) {
-        LinkedList<Integer> lista = new LinkedList<>();
-        lista.agregarFinal(5);
-        lista.agregarFinal(10);
-        lista.agregarFinal(15);
-        lista.agregarFinal(20);
-        lista.agregarInicio(1);
-        lista.agregar(100, 2);
+        LinkedList<Integer> list = new LinkedList<>();
+        list.addLast(5);
+        list.addLast(10);
+        list.addLast(15);
+        list.addLast(20);
+        list.addFirst(1);
+        list.add(100, 2);
 
-        System.out.println("Lista actual:");
-        lista.imprimirLista();
+        System.out.println("Current list:");
+        list.printList();
 
-//        System.out.println("Lista ordenada:");
-//        lista.ordenarLista();
-//        lista.imprimirLista();
+//        System.out.println("Sorted list:");
+//        list.sortList();
+//        list.printList();
 
-        //Se invierte la lista enlazada
-//        System.out.println("La lista invertida es:");
-//        lista.invertirListaEnlazada();
-//        lista.imprimirLista();
+        // Reverse the linked list
+//        System.out.println("The reversed list is:");
+//        list.reverseLinkedList();
+//        list.printList();
 
-        System.out.println("Valor del nodo en la posición 3: " + lista.obtenerValorNodo(3));
-        System.out.println("Posición del nodo con valor 10: " + lista.obtenerPosicionNodo(10));
+        System.out.println("Value of the node at position 3: " + list.getNodeValue(3));
+        System.out.println("Position of the node with value 10: " + list.getNodePosition(10));
 
-        lista.eliminarPrimero();
-        lista.eliminarUltimo();
-        lista.eliminar(15);
+        list.deleteFirst();
+        list.deleteLast();
+        list.delete(15);
 
-        System.out.println("Lista después de eliminar algunos nodos:");
-        lista.imprimirLista();
+        System.out.println("List after deleting some nodes:");
+        list.printList();
 
-        lista.modificarNodo(2, 200);
+        list.modifyNode(2, 200);
 
-        System.out.println("Lista después de modificar el nodo en la posición 2:");
-        lista.imprimirLista();
+        System.out.println("List after modifying the node at position 2:");
+        list.printList();
 
-        System.out.println("Tamaño de la lista: " + lista.size());
+        System.out.println("Size of the list: " + list.size());
 
-        System.out.println("Iterando sobre la lista:");
-        Iterator<Integer> iterator = lista.iterator();
+        System.out.println("Iterating over the list:");
+        Iterator<Integer> iterator = list.iterator();
         System.out.println(iterator.next());
         System.out.println(iterator.next());
         System.out.println(iterator.next());
 
 
-        //Se muestra la lista enlazada actual
-        System.out.println("La lista enlazada actual es:");
-        lista.imprimirLista();
+        // Display the current linked list
+        System.out.println("The current linked list is:");
+        list.printList();
 
-        //Se invierte la lista enlazada
-        System.out.println("La lista invertida es:");
-        lista.invertirListaEnlazada();
-        lista.imprimirLista();
+        // Reverse the linked list
+        System.out.println("The reversed list is:");
+        list.reverseLinkedList();
+        list.printList();
     }
 }
