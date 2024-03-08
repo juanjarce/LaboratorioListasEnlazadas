@@ -2,34 +2,32 @@ package co.uniquindio.laboratorioListas.listas;
 
 import java.util.Iterator;
 
-import java.util.Iterator;
-
-class Nodo<T> {
+class Node<T> {
     T valor;
-    Nodo<T> siguiente;
+    Node<T> siguiente;
 
     // Constructor
-    public Nodo(T valor) {
+    public Node(T valor) {
         this.valor = valor;
         this.siguiente = null;
     }
 }
 
-public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
-    Nodo<T> cabeza;
+public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
+    Node<T> cabeza;
 
     // Constructor
-    public ListaEnlazada() {
+    public LinkedList() {
         this.cabeza = null;
     }
 
     // Método para agregar un elemento al final de la lista
     public void agregarFinal(T valor) {
-        Nodo<T> nuevoNodo = new Nodo<>(valor);
+        Node<T> nuevoNodo = new Node<>(valor);
         if (cabeza == null) {
             cabeza = nuevoNodo;
         } else {
-            Nodo<T> actual = cabeza;
+            Node<T> actual = cabeza;
             while (actual.siguiente != null) {
                 actual = actual.siguiente;
             }
@@ -39,7 +37,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
 
     // Método para agregar un elemento al inicio de la lista
     public void agregarInicio(T valor) {
-        Nodo<T> nuevoNodo = new Nodo<>(valor);
+        Node<T> nuevoNodo = new Node<>(valor);
         nuevoNodo.siguiente = cabeza;
         cabeza = nuevoNodo;
     }
@@ -54,8 +52,8 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
             agregarInicio(valor);
             return;
         }
-        Nodo<T> nuevoNodo = new Nodo<>(valor);
-        Nodo<T> actual = cabeza;
+        Node<T> nuevoNodo = new Node<>(valor);
+        Node<T> actual = cabeza;
         for (int i = 0; i < posicion - 1 && actual != null; i++) {
             actual = actual.siguiente;
         }
@@ -69,7 +67,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
 
     // Método para obtener el valor de un nodo en una posición específica
     public T obtenerValorNodo(int posicion) {
-        Nodo<T> actual = cabeza;
+        Node<T> actual = cabeza;
         for (int i = 0; i < posicion && actual != null; i++) {
             actual = actual.siguiente;
         }
@@ -81,8 +79,8 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
     }
 
     // Método para obtener el nodo en una posición específica
-    public Nodo<T> obtenerNodo(int posicion) {
-        Nodo<T> actual = cabeza;
+    public Node<T> obtenerNodo(int posicion) {
+        Node<T> actual = cabeza;
         for (int i = 0; i < posicion && actual != null; i++) {
             actual = actual.siguiente;
         }
@@ -92,7 +90,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
     // Método para obtener la posición de un nodo dado su valor
     public int obtenerPosicionNodo(T valor) {
         int posicion = 0;
-        Nodo<T> actual = cabeza;
+        Node<T> actual = cabeza;
         while (actual != null) {
             if (actual.valor.equals(valor)) {
                 return posicion;
@@ -120,7 +118,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
         if (cabeza == null || cabeza.siguiente == null) {
             cabeza = null;
         } else {
-            Nodo<T> actual = cabeza;
+            Node<T> actual = cabeza;
             while (actual.siguiente.siguiente != null) {
                 actual = actual.siguiente;
             }
@@ -137,7 +135,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
             cabeza = cabeza.siguiente;
             return;
         }
-        Nodo<T> actual = cabeza;
+        Node<T> actual = cabeza;
         while (actual.siguiente != null && !actual.siguiente.valor.equals(valor)) {
             actual = actual.siguiente;
         }
@@ -148,7 +146,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
 
     // Método para modificar el valor de un nodo en una posición específica
     public void modificarNodo(int posicion, T nuevoValor) {
-        Nodo<T> nodo = obtenerNodo(posicion);
+        Node<T> nodo = obtenerNodo(posicion);
         if (nodo != null) {
             nodo.valor = nuevoValor;
         } else {
@@ -162,11 +160,11 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
             return; // La lista ya está ordenada o vacía
         }
 
-        Nodo<T> nodoActual = cabeza.siguiente;
+        Node<T> nodoActual = cabeza.siguiente;
         while (nodoActual != null) {
             T valorActual = nodoActual.valor;
-            Nodo<T> nodoAnterior = cabeza;
-            Nodo<T> nodoIterador = cabeza;
+            Node<T> nodoAnterior = cabeza;
+            Node<T> nodoIterador = cabeza;
 
             while (nodoIterador != nodoActual) {
                 if (valorActual.compareTo(nodoIterador.valor) < 0) {
@@ -185,7 +183,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
 
     // Método para imprimir la lista
     public void imprimirLista() {
-        Nodo<T> actual = cabeza;
+        Node<T> actual = cabeza;
         while (actual != null) {
             System.out.print(actual.valor + " ");
             actual = actual.siguiente;
@@ -206,7 +204,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
     // Método para obtener el tamaño de la lista
     private int size() {
         int size = 0;
-        Nodo<T> actual = cabeza;
+        Node<T> actual = cabeza;
         while (actual != null) {
             size++;
             actual = actual.siguiente;
@@ -225,7 +223,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
     }
 
     //Metodo para invertir una lista enlazada recursivamente
-    private void invertirRecursivo(Nodo<T> actual, Nodo<T> anterior) {
+    private void invertirRecursivo(Node<T> actual, Node<T> anterior) {
         if(actual.siguiente==null){
             cabeza = actual;
             cabeza.siguiente = anterior;
@@ -237,7 +235,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
     }
 
     //Metodo para recorrer una lista enlazada de forma recurisiva
-    public void recorrerRecursivo(Nodo nodo) {
+    public void recorrerRecursivo(Node nodo) {
         // Verifica si el nodo actual no es nulo
         if (nodo != null) {
             // Imprime el valor del nodo actual
@@ -251,7 +249,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            private Nodo<T> actual = cabeza;
+            private Node<T> actual = cabeza;
 
             @Override
             public boolean hasNext() {
@@ -268,7 +266,7 @@ public class ListaEnlazada<T extends Comparable<T>> implements Iterable<T> {
     }
 
     public static void main(String[] args) {
-        ListaEnlazada<Integer> lista = new ListaEnlazada<>();
+        LinkedList<Integer> lista = new LinkedList<>();
         lista.agregarFinal(5);
         lista.agregarFinal(10);
         lista.agregarFinal(15);

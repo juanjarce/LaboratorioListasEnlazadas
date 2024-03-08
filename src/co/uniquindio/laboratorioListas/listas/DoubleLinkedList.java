@@ -1,28 +1,26 @@
 package co.uniquindio.laboratorioListas.listas;
 import java.util.Iterator;
 
-import java.util.Iterator;
-
-class NodoDoble<T> {
+class DoubleNode<T> {
     T valor;
-    NodoDoble<T> anterior;
-    NodoDoble<T> siguiente;
+    DoubleNode<T> anterior;
+    DoubleNode<T> siguiente;
 
     // Constructor
-    public NodoDoble(T valor) {
+    public DoubleNode(T valor) {
         this.valor = valor;
         this.anterior = null;
         this.siguiente = null;
     }
 }
 
-public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterable<T> {
-    private NodoDoble<T> cabeza;
-    private NodoDoble<T> cola;
+public class DoubleLinkedList<T extends Comparable<T>> implements Iterable<T> {
+    private DoubleNode<T> cabeza;
+    private DoubleNode<T> cola;
     private int size;
 
     // Constructor
-    public ListaDoblementeEnlazada() {
+    public DoubleLinkedList() {
         this.cabeza = null;
         this.cola = null;
         this.size = 0;
@@ -30,7 +28,7 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
 
     // Método para agregar un elemento al inicio de la lista
     public void agregarInicio(T valor) {
-        NodoDoble<T> nuevoNodo = new NodoDoble<>(valor);
+        DoubleNode<T> nuevoNodo = new DoubleNode<>(valor);
         if (estaVacia()) {
             cabeza = nuevoNodo;
             cola = nuevoNodo;
@@ -44,7 +42,7 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
 
     // Método para agregar un elemento al final de la lista
     public void agregarFinal(T valor) {
-        NodoDoble<T> nuevoNodo = new NodoDoble<>(valor);
+        DoubleNode<T> nuevoNodo = new DoubleNode<>(valor);
         if (estaVacia()) {
             cabeza = nuevoNodo;
             cola = nuevoNodo;
@@ -66,8 +64,8 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
         } else if (posicion == size) {
             agregarFinal(valor);
         } else {
-            NodoDoble<T> nuevoNodo = new NodoDoble<>(valor);
-            NodoDoble<T> actual = obtenerNodo(posicion - 1);
+            DoubleNode<T> nuevoNodo = new DoubleNode<>(valor);
+            DoubleNode<T> actual = obtenerNodo(posicion - 1);
             nuevoNodo.siguiente = actual.siguiente;
             actual.siguiente.anterior = nuevoNodo;
             actual.siguiente = nuevoNodo;
@@ -82,11 +80,11 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
     }
 
     // Método para obtener el nodo en una posición específica
-    private NodoDoble<T> obtenerNodo(int posicion) {
+    private DoubleNode<T> obtenerNodo(int posicion) {
         if (!indiceValido(posicion)) {
             throw new IndexOutOfBoundsException("Posición fuera de rango");
         }
-        NodoDoble<T> actual;
+        DoubleNode<T> actual;
         if (posicion < size / 2) {
             actual = cabeza;
             for (int i = 0; i < posicion; i++) {
@@ -103,7 +101,7 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
 
     // Método para obtener la posición de un nodo dado su valor
     public int obtenerPosicionNodo(T valor) {
-        NodoDoble<T> actual = cabeza;
+        DoubleNode<T> actual = cabeza;
         int posicion = 0;
         while (actual != null) {
             if (actual.valor.equals(valor)) {
@@ -153,7 +151,7 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
 
     // Método para eliminar un nodo dado su valor
     public void eliminar(T valor) {
-        NodoDoble<T> actual = cabeza;
+        DoubleNode<T> actual = cabeza;
         while (actual != null && !actual.valor.equals(valor)) {
             actual = actual.siguiente;
         }
@@ -186,7 +184,7 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
         boolean intercambiado;
         do {
             intercambiado = false;
-            NodoDoble<T> actual = cabeza;
+            DoubleNode<T> actual = cabeza;
             while (actual.siguiente != null) {
                 if (actual.valor.compareTo(actual.siguiente.valor) > 0) {
                     intercambiarNodos(actual, actual.siguiente);
@@ -198,7 +196,7 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
     }
 
     // Método auxiliar para intercambiar dos nodos en la lista
-    private void intercambiarNodos(NodoDoble<T> nodo1, NodoDoble<T> nodo2) {
+    private void intercambiarNodos(DoubleNode<T> nodo1, DoubleNode<T> nodo2) {
         T temp = nodo1.valor;
         nodo1.valor = nodo2.valor;
         nodo2.valor = temp;
@@ -206,7 +204,7 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
 
     // Método para imprimir la lista
     public void imprimirLista() {
-        NodoDoble<T> actual = cabeza;
+        DoubleNode<T> actual = cabeza;
         while (actual != null) {
             System.out.print(actual.valor + " ");
             actual = actual.siguiente;
@@ -232,22 +230,22 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
         }
     }
 
-    private void invertirListaDoblementeEnlazadaRecursivo(NodoDoble<T> actual, int indice) {
+    private void invertirListaDoblementeEnlazadaRecursivo(DoubleNode<T> actual, int indice) {
         if(indice == (size-1)){
             //Se intercambian los enlaces
-            NodoDoble<T> aux = cola.anterior;
+            DoubleNode<T> aux = cola.anterior;
             cola.anterior = cola.siguiente;
             cola.siguiente = aux;
 
             //Se coloca como la cabeza de la lista
-            NodoDoble<T> auxLimites = cabeza;
+            DoubleNode<T> auxLimites = cabeza;
             cabeza = cola;
             cola = cabeza;
         }
         else{
             invertirListaDoblementeEnlazadaRecursivo(actual.siguiente, indice+1);
             //Se intercambian los enlaces
-            NodoDoble<T> aux = actual.anterior;
+            DoubleNode<T> aux = actual.anterior;
             actual.anterior = actual.siguiente;
             actual.siguiente = aux;
         }
@@ -257,7 +255,7 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            private NodoDoble<T> actual = cabeza;
+            private DoubleNode<T> actual = cabeza;
 
             @Override
             public boolean hasNext() {
@@ -274,7 +272,7 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
     }
 
     public static void main(String[] args) {
-        ListaDoblementeEnlazada<Double> lista = new ListaDoblementeEnlazada<>();
+        DoubleLinkedList<Double> lista = new DoubleLinkedList<>();
         lista.agregarInicio(100.0);
         lista.agregarFinal(25.0);
         lista.agregar(352.0, 1);
