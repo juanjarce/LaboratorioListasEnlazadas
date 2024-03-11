@@ -263,6 +263,25 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
         };
     }
 
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Methods for Laboratory
+    public int countAppearances(T value) {
+        //Iniatilize a counter
+        int count = 0;
+        //Instance of iterator for traveling the list
+        Node n = head;
+        while(n!=null){
+            // Get the element on the list
+            T v = (T) n.value;
+            // Comparation for knowing if the values are the same
+            if(v.equals(value)) count++;
+            n = n.next;
+        }
+        return count;
+    }
+
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Main
     public static void main(String[] args) {
         LinkedList<Integer> list = new LinkedList<>();
         list.addLast(5);
@@ -317,4 +336,5 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
         list.reverseLinkedList();
         list.printList();
     }
+
 }
