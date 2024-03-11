@@ -265,6 +265,8 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
 
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Methods for Laboratory
+
+    //Method for counting the appearances of a value on a linked list
     public int countAppearances(T value) {
         //Iniatilize a counter
         int count = 0;
@@ -278,6 +280,15 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
             n = n.next;
         }
         return count;
+    }
+
+    //Method for cancatin a linked list to the main linked list
+    public void concat(LinkedList<T> list2) {
+        Node<T> current = list2.head;
+        while (current != null){
+            this.addLast(current.value);
+            current = current.next;
+        }
     }
 
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
