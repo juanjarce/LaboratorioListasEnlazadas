@@ -250,6 +250,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements Iterable<T> {
     }
 
     // Implementation of the iterator method of the Iterable interface
+    //7. Write the Iterator for a doubly linked list.
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
@@ -269,6 +270,53 @@ public class DoubleLinkedList<T extends Comparable<T>> implements Iterable<T> {
         };
     }
 
+    //----------------------------------------------------------------------------------------------------------------------------
+    //Methods for laboratory
+    public void printBackward() {
+        DoubleNode<T> current = tail;
+        while (current != null) {
+            System.out.print(current.value + " ");
+            current = current.previous;
+        }
+        System.out.println();
+    }
+
+    //Method (insert)
+    public void insert(T value, int position) {
+        if (position < 0 || position > size) {
+            throw new IndexOutOfBoundsException("Position out of range");
+        }
+        if (position == 0) {
+            addFirst(value);
+        } else if (position == size) {
+            addLast(value);
+        } else {
+            DoubleNode<T> newNode = new DoubleNode<>(value);
+            DoubleNode<T> current = getNode(position - 1);
+            newNode.next = current.next;
+            current.next.previous = newNode;
+            current.next = newNode;
+            newNode.previous = current;
+            size++;
+        }
+    }
+
+    //Method (search)
+    public int search(T value) {
+        DoubleNode<T> current = head;
+        int position = 0;
+        while (current != null) {
+            if (current.value.equals(value)) {
+                return position;
+            }
+            current = current.next;
+            position++;
+        }
+        return -1;
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------------
+    //Main
     public static void main(String[] args) {
         DoubleLinkedList<Double> list = new DoubleLinkedList<>();
         list.addFirst(100.0);
