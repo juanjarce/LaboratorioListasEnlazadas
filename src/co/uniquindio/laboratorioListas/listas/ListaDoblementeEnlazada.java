@@ -313,6 +313,8 @@ public class ListaDoblementeEnlazada<T extends Comparable<T>> implements Iterabl
 
         System.out.println("Tamaño de la lista: " + lista.size);
 
+        System.out.println("Prueba de push");
+
     }
 }
 
