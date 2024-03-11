@@ -13,6 +13,31 @@ class Node<T> {
     }
 }
 
+//Class to represent a term of a polinomium. Made for problem 12.
+class PolynomialTerm <T extends Comparable<T>> {
+    T coefficient;
+    T exponent;
+    PolynomialTerm<T> next;
+
+    // Constructor
+    public PolynomialTerm(T coefficient, T exponent) {
+        this.coefficient = coefficient;
+        this.exponent = exponent;
+        this.next = null;
+    }
+
+    @Override
+    public String toString() {
+        if ((Integer)exponent == 0) {
+            return coefficient.toString();
+        }
+        if ((Integer)exponent == 1) {
+            return coefficient + "x";
+        }
+        return coefficient + "x^" + exponent;
+    }
+}
+
 public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
     Node<T> head;
 
@@ -243,6 +268,8 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
         }
     }
 
+
+
     // Implementation of the iterator method of the Iterable interface
     @Override
     public Iterator<T> iterator() {
@@ -261,6 +288,76 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
                 return value;
             }
         };
+    }
+
+
+    // Class to represent a polinomium as a linked list. Made for problem 12.
+    public static class PolynomialLinkedList<T extends Comparable<T>> extends LinkedList<T> {
+
+        T coefficient;
+        T exponent;
+        PolynomialTerm<T> head;
+
+        public PolynomialLinkedList() {
+            this.head = null;
+        }
+
+
+        //Methods of problem 12. Adding a polinomiun of grade n as a simple linked list, where each node has the coefficient and the exponent of the term.
+
+        //Method to add a term to the polinomium at the end of the list.
+        public void addPolinomiumTerm(T coefficient, T exponent) {
+            PolynomialTerm<T> newTerm = new PolynomialTerm<>(coefficient, exponent);
+
+            if(head==null) {
+                head = newTerm;
+            }
+            else {
+                PolynomialTerm<T> current = head;
+                while (current.next != null) {
+                    current = current.next;
+                }
+                current.next = newTerm;
+            }
+        }
+
+        //Method to sort the polinomium in descending order of the exponents.
+        public void sortPolynomial() {
+            if (head == null || head.next == null) {
+                return; // The list is already sorted or empty
+            }
+
+            PolynomialTerm<T> current = head;
+            while (current != null) {
+                PolynomialTerm<T> next = current.next;
+                while (next != null) {
+                    if ((Integer)current.exponent < (Integer)next.exponent) {
+                        // Swap coefficients
+                        T tempCoefficient = current.coefficient;
+                        current.coefficient = next.coefficient;
+                        next.coefficient = tempCoefficient;
+
+                        // Swap exponents
+                        T tempExponent = current.exponent;
+                        current.exponent = next.exponent;
+                        next.exponent = tempExponent;
+                    }
+                    next = next.next;
+                }
+                current = current.next;
+            }
+        }
+
+        //Method to print the polinomium sorted in descending order of the exponents.
+        public void printPolynomial() {
+            sortPolynomial();
+            PolynomialTerm<T> current = head;
+            while (current != null) {
+                System.out.print(current + " ");
+                current = current.next;
+            }
+            System.out.println();
+        }
     }
 
     public static void main(String[] args) {
@@ -316,5 +413,15 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
         System.out.println("The reversed list is:");
         list.reverseLinkedList();
         list.printList();
+
+        //Test the PolynomialLinkedList class for Problem 12
+        PolynomialLinkedList<Integer> polynomial = new PolynomialLinkedList<>();
+        polynomial.addPolinomiumTerm(5, 2);
+        polynomial.addPolinomiumTerm(3, 1);
+        polynomial.addPolinomiumTerm(2, 0);
+        polynomial.addPolinomiumTerm(4, 3);
+        System.out.println("Printing the polynomial:");
+        polynomial.printPolynomial();
+
     }
 }
