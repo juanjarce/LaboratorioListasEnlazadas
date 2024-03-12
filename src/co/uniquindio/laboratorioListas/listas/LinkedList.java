@@ -293,9 +293,6 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
 
     // Class to represent a polinomium as a linked list. Made for problem 12.
     public static class PolynomialLinkedList<T extends Comparable<T>> extends LinkedList<T> {
-
-        T coefficient;
-        T exponent;
         PolynomialTerm<T> head;
 
         public PolynomialLinkedList() {
@@ -345,6 +342,20 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
                     next = next.next;
                 }
                 current = current.next;
+            }
+        }
+
+        //Method to print the value table of the polinomium for x values from 0 to 5 with a step of 0.5.
+        public void printValueTable() {
+            System.out.println("x\t\ty");
+            for (double x = 0; x <= 5; x += 0.5) {
+                double y = 0;
+                PolynomialTerm<T> current = head;
+                while (current != null) {
+                    y += (Integer)current.coefficient * Math.pow(x, (Integer)current.exponent);
+                    current = current.next;
+                }
+                System.out.println(x + "\t\t" + y);
             }
         }
 
@@ -443,15 +454,6 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
         System.out.println("The reversed list is:");
         list.reverseLinkedList();
         list.printList();
-
-        //Test the PolynomialLinkedList class for Problem 12
-        PolynomialLinkedList<Integer> polynomial = new PolynomialLinkedList<>();
-        polynomial.addPolinomiumTerm(5, 2);
-        polynomial.addPolinomiumTerm(3, 1);
-        polynomial.addPolinomiumTerm(2, 0);
-        polynomial.addPolinomiumTerm(4, 3);
-        System.out.println("Printing the polynomial:");
-        polynomial.printPolynomial();
 
     }
 
