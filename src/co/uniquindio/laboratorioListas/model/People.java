@@ -13,10 +13,10 @@ public class People implements Comparable<People> {
     }
 
     //Constructor of People class
-    public People(String nombres, String lastName, String cedula) {
-        this.names = nombres;
+    public People(String names, String lastName, String identification) {
+        this.names = names;
         this.lastName = lastName;
-        this.identification = cedula;
+        this.identification = identification;
     }
 
     //getters() & setters() of People class
