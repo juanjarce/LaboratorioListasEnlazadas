@@ -1,25 +1,25 @@
 package co.uniquindio.laboratorioListas.model;
 
-public class Person {
+public class People implements Comparable<People> {
 
-    //Atributos de la clase Person
+    //Atributos de la clase People
     String names;
     String lastName;
     String identification;
 
-    //Constructor vacio de la clase Person
-    public Person(){
+    //Constructor vacio de la clase People
+    public People(){
 
     }
 
-    //Constructor of Person class
-    public Person(String nombres, String lastName, String cedula) {
+    //Constructor of People class
+    public People(String nombres, String lastName, String cedula) {
         this.names = nombres;
         this.lastName = lastName;
         this.identification = cedula;
     }
 
-    //getters() & setters() of Person class
+    //getters() & setters() of People class
     public String getNames() {
         return names;
     }
@@ -39,10 +39,10 @@ public class Person {
         this.identification = identification;
     }
 
-    //toString() of Person class
+    //toString() of People class
     @Override
     public String toString() {
-        return "Person{" +
+        return "People{" +
                 "names='" + names + '\'' +
                 ", lastNames='" + lastName + '\'' +
                 ", identification='" + identification + '\'' +
@@ -50,10 +50,15 @@ public class Person {
     }
 
     //-----------------------------------------------------------------------------------------------------------------
-    //Necesary methods for Person managment
+    //Necesary methods for People managment
     
     //Method for knowing if the amount of digits in the identification is an even number
     public boolean isIdentificationEven(){
         return this.identification.length()%2==0;
+    }
+
+    @Override
+    public int compareTo(People o) {
+        return identification.compareTo(o.identification);
     }
 }
