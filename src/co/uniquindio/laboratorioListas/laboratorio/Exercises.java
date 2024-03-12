@@ -157,6 +157,28 @@ public class Exercises {
         System.out.println(" ");
         System.out.println("Printing the polynomial:");
         testPolynomialLinkedList();
+
+        /*
+        //13. Do a recurse method to find the maximum distance between a key value of a linkedlist with custom node declaration given by the lab.
+        //The method is in the class LinkedList
+         */
+        //Create a linked list to find the maximum distance bet ween a key value.
+        LinkedList.List maximumDistanceList = new LinkedList.List();
+        //Add values to the list. Added in the same order as in the lab guide.
+        maximumDistanceList.add(9);
+        maximumDistanceList.add(4);
+        maximumDistanceList.add(6);
+        maximumDistanceList.add(8);
+        maximumDistanceList.add(4);
+        maximumDistanceList.add(5);
+        maximumDistanceList.add(4);
+        maximumDistanceList.add(4);
+
+        //Test the maxDistance method.
+        int key = 4;
+        int maxDistance = maximumDistanceList.maxDistanceBetweenKeys(key);
+        System.out.println("The maximum distance between the key value " + key + " is: " + maxDistance);
+
     }
 
     //1. Get the numbers in the odd positions of a simple linked list of numbers
