@@ -1,9 +1,7 @@
 package co.uniquindio.laboratorioListas.laboratorio;
 
 
-import co.uniquindio.laboratorioListas.listas.CircularLinkedList;
-import co.uniquindio.laboratorioListas.listas.DoubleLinkedList;
-import co.uniquindio.laboratorioListas.listas.LinkedList;
+import co.uniquindio.laboratorioListas.listas.*;
 import co.uniquindio.laboratorioListas.model.People;
 
 import java.io.BufferedReader;
@@ -69,7 +67,7 @@ public class Exercises {
         peopleDoublyList.addLast(person2);
         peopleDoublyList.addLast(person3);
 
-        // Printing the doubly list of people
+        // Printing the double list of people
         System.out.println("Doubly List of people:");
         peopleList.printList();
 
@@ -157,12 +155,41 @@ public class Exercises {
         System.out.println("The final number list is: ");
         numberList.printList();
 
+        //11. Represent a polynomial of degree n as a linked list, where each node contains the coefficient and the exponent of the nth term.
+        //After representing the polynomial, write a method that allows evaluating the polynomial for a given value of x.
+        System.out.println(" ");
+        System.out.println("Printing the polynomial:");
+        testPolynomialLinkedList();
+        System.out.println();
+
         //12. Write a program that calculates the mean and standard deviation of a set of N real numbers
         System.out.println("Solution 12:");
         LinkedList<Double> linkedList = Exercises.createLinkedListFromFile("src/resources/values.txt");
         linkedList.printList();
         System.out.println("The mean is: " + getMean());
         System.out.println("The standard deviation is: " + getStandartDeviation());
+
+        /*
+        //13. Do a recurse method to find the maximum distance between a key value of a linkedlist with custom node declaration given by the lab.
+        //The method is in the class LinkedList
+         */
+        System.out.println();
+        //Create a linked list to find the maximum distance bet ween a key value.
+        LinkedList.List maximumDistanceList = new LinkedList.List();
+        //Add values to the list. Added in the same order as in the lab guide.
+        maximumDistanceList.add(9);
+        maximumDistanceList.add(4);
+        maximumDistanceList.add(6);
+        maximumDistanceList.add(8);
+        maximumDistanceList.add(4);
+        maximumDistanceList.add(5);
+        maximumDistanceList.add(4);
+        maximumDistanceList.add(4);
+
+        //Test the maxDistance method.
+        int key = 4;
+        int maxDistance = maximumDistanceList.maxDistanceBetweenKeys(key);
+        System.out.println("The maximum distance between the key value " + key + " is: " + maxDistance);
     }
 
     //1. Get the numbers in the odd positions of a simple linked list of numbers
@@ -193,7 +220,7 @@ public class Exercises {
         while (iterator.hasNext()) {
             //Get the Persona in the Node
             People p = iterator.next();
-            //If amount of digits of the Person is a even number, it´s added to the popleList
+            //If amount of digits of the Person is an even number, it´s added to the popleList
             if (p.isIdentificationEven()) {
                 peopleList.add(p);
             }
@@ -209,7 +236,7 @@ public class Exercises {
         while (iterator.hasNext()) {
             //Get the Node value
             int v = iterator.next();
-            //If the Node value is a even number, it´s removed form the list
+            //If the Node value is an even number, it´s removed form the list
             if (v % 2 == 0) {
                 list.delete(v);
             }
@@ -218,7 +245,7 @@ public class Exercises {
 
     //4. Write a method that returns a linked list with the odd values of a list of numbers.
     public static LinkedList<Integer> returnOddValues(LinkedList<Integer> numberList) {
-        //Create a instance of a linked list, where the odd values are deposited
+        //Create an instance of a linked list, where the odd values are deposited
         LinkedList<Integer> oddList = new LinkedList<>();
         //Index for oddlist position reference
         int j = 0;
@@ -258,7 +285,7 @@ public class Exercises {
 
     //8. Obtain the list of people who have an ID with even number of elements from a list double linked of people.
     public static ArrayList<People> getPeopleEvenID(DoubleLinkedList<People> list) {
-        //Initialize a instance of a list, that will contain the people with even number of digits in their ID
+        //Initialize an instance of a list, that will contain the people with even number of digits in their ID
         ArrayList<People> evenID = new ArrayList<People>();
         //Instance of the list iterator for traveling the list
         Iterator<People> iterator = list.iterator();
@@ -356,5 +383,24 @@ public class Exercises {
             System.err.println("Error reading the file: " + e.getMessage());
         }
         return linkedList;
+    }
+
+    //Test the PolynomialLinkedList class for Problem 11, this is a class that will be invoked to the main.
+    public static void testPolynomialLinkedList(){
+
+        //Create a polynomial list, the polynomial comes from the class PolynomialLinkedList in LinkedList package.
+        LinkedList.PolynomialLinkedList<Integer> polynomial = new LinkedList.PolynomialLinkedList<>();
+
+        //Few polynomial terms are added. They organize in the list by the exponent value. If there are two terms with the same exponent, the coefficients are not added.
+        polynomial.addPolinomiumTerm(5,2);
+        polynomial.addPolinomiumTerm(3,1);
+        polynomial.addPolinomiumTerm(2,0);
+        polynomial.addPolinomiumTerm(4,3);
+
+        //Print the polynomial
+        polynomial.printPolynomial();
+
+        //Print the value table of the polynomial.
+        polynomial.printValueTable();
     }
 }

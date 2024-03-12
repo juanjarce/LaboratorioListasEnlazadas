@@ -2,6 +2,8 @@ package co.uniquindio.laboratorioListas.listas;
 
 import java.util.Iterator;
 
+
+//Average Node class used to solve the problems of the laboratory
 class Node<T> {
     T value;
     Node<T> next;
@@ -10,6 +12,45 @@ class Node<T> {
     public Node(T value) {
         this.value = value;
         this.next = null;
+    }
+}
+
+//Class to represent a term of a polinomium. Made for problem 11.
+class PolynomialTerm<T extends Comparable<T>> {
+    T coefficient;
+    T exponent;
+    PolynomialTerm<T> next;
+
+    // Constructor
+    public PolynomialTerm(T coefficient, T exponent) {
+        this.coefficient = coefficient;
+        this.exponent = exponent;
+        this.next = null;
+    }
+
+    @Override
+    public String toString() {
+        if ((Integer) exponent == 0) {
+            return coefficient.toString();
+        }
+        if ((Integer) exponent == 1) {
+            return coefficient + "x";
+        }
+        return coefficient + "x^" + exponent;
+    }
+}
+
+//Class to find the maximum distance between two occurrences of the key in the list. Made for problem 13.
+class ListNode<Integer> {
+    Integer key;
+    ListNode<Integer> next;
+    Integer position;
+
+    public ListNode(Integer k, ListNode<Integer> n, Integer position) {
+
+        this.key = k;
+        this.next = n;
+        this.position = position;
     }
 }
 
@@ -243,6 +284,7 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
         }
     }
 
+
     // Implementation of the iterator method of the Iterable interface
     @Override
     public Iterator<T> iterator() {
@@ -263,6 +305,86 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
         };
     }
 
+
+    // Class to represent a polinomium as a linked list. Made for problem 11.
+    public static class PolynomialLinkedList<T extends Comparable<T>> extends LinkedList<T> {
+        PolynomialTerm<T> head;
+
+        public PolynomialLinkedList() {
+            this.head = null;
+        }
+
+
+        //Methods of problem 12. Adding a polinomiun of grade n as a simple linked list, where each node has the coefficient and the exponent of the term.
+
+        //Method to add a term to the polinomium at the end of the list.
+        public void addPolinomiumTerm(T coefficient, T exponent) {
+            PolynomialTerm<T> newTerm = new PolynomialTerm<>(coefficient, exponent);
+
+            if (head == null) {
+                head = newTerm;
+            } else {
+                PolynomialTerm<T> current = head;
+                while (current.next != null) {
+                    current = current.next;
+                }
+                current.next = newTerm;
+            }
+        }
+
+        //Method to sort the polinomium in descending order of the exponents.
+        public void sortPolynomial() {
+            if (head == null || head.next == null) {
+                return; // The list is already sorted or empty
+            }
+
+            PolynomialTerm<T> current = head;
+            while (current != null) {
+                PolynomialTerm<T> next = current.next;
+                while (next != null) {
+                    if ((Integer) current.exponent < (Integer) next.exponent) {
+                        // Swap coefficients
+                        T tempCoefficient = current.coefficient;
+                        current.coefficient = next.coefficient;
+                        next.coefficient = tempCoefficient;
+
+                        // Swap exponents
+                        T tempExponent = current.exponent;
+                        current.exponent = next.exponent;
+                        next.exponent = tempExponent;
+                    }
+                    next = next.next;
+                }
+                current = current.next;
+            }
+        }
+
+        //Method to print the value table of the polinomium for x values from 0 to 5 with a step of 0.5.
+        public void printValueTable() {
+            System.out.println("x\t\ty");
+            for (double x = 0; x <= 5; x += 0.5) {
+                double y = 0;
+                PolynomialTerm<T> current = head;
+                while (current != null) {
+                    y += (Integer) current.coefficient * Math.pow(x, (Integer) current.exponent);
+                    current = current.next;
+                }
+                System.out.println(x + "\t\t" + y);
+            }
+        }
+
+        //Method to print the polinomium sorted in descending order of the exponents.
+        public void printPolynomial() {
+            sortPolynomial();
+            PolynomialTerm<T> current = head;
+            while (current != null) {
+                System.out.print(current + " ");
+                current = current.next;
+            }
+            System.out.println();
+        }
+    }
+
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Methods for Laboratory
 
@@ -272,11 +394,11 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
         int count = 0;
         //Instance of iterator for traveling the list
         Node n = head;
-        while(n!=null){
+        while (n != null) {
             // Get the element on the list
             T v = (T) n.value;
             // Comparation for knowing if the values are the same
-            if(v.equals(value)) count++;
+            if (v.equals(value)) count++;
             n = n.next;
         }
         return count;
@@ -285,14 +407,76 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
     //Method for cancatin a linked list to the main linked list
     public void concat(LinkedList<T> list2) {
         Node<T> current = list2.head;
-        while (current != null){
+        while (current != null) {
             this.addLast(current.value);
             current = current.next;
         }
     }
 
+
+    //Problem 13. Declaring the proposed list and node declaration from the paper!
+    //An additional position attribute is added in ListNode to keep track of the position of the node in the list.
+
+    public static class List {
+        ListNode<Integer> start;
+
+        // Constructor
+        public List() {
+            start = null;
+        }
+
+        // Recursive method to find the maximum distance between subsequent occurrences of a key
+        public int maxDistanceBetweenKeys(Integer key) {
+            // Start the recursive search from the beginning of the list
+            return maxDistanceBetweenKeysRecursive(start, key, -1, 0);
+        }
+
+        private int maxDistanceBetweenKeysRecursive(ListNode<Integer> current, Integer key, int lastPosition, int maxDistance) {
+            if (current == null) {
+                // Base case: end of the list
+                return maxDistance;
+            }
+
+            if (current.key.equals(key)) {
+                // Found the key, calculate distance
+                int distance = lastPosition == -1 ? 0 : current.position - lastPosition;
+                // Update max distance if needed
+                maxDistance = Math.max(maxDistance, distance);
+                // Recur with the current position as the last position
+                return maxDistanceBetweenKeysRecursive(current.next, key, current.position, maxDistance);
+            }
+
+            // Key not found, continue searching
+            return maxDistanceBetweenKeysRecursive(current.next, key, lastPosition, maxDistance);
+        }
+
+
+        /*
+        In this code, a position variable is initialized to 1 and incremented in each iteration of the while loop. When a new node is added to the list, its position attribute is set to the current value of the position variable.
+        This ensures that each node's position attribute correctly reflects its position in the list.
+         */
+        public void add(Integer value) {
+            ListNode<Integer> newNode = new ListNode<>(value, null, 0);
+            if (start == null) {
+                start = newNode;
+            } else {
+                ListNode<Integer> current = start;
+                int position = 1;
+                while (current.next != null) {
+                    current = current.next;
+                    position++;
+                }
+                newNode.position = position;
+                current.next = newNode;
+            }
+        }
+
+
+    }
+
+
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    // Main
+    // Main testing methods of the LinkedList class.
     public static void main(String[] args) {
         LinkedList<Integer> list = new LinkedList<>();
         list.addLast(5);
@@ -346,6 +530,7 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
         System.out.println("The reversed list is:");
         list.reverseLinkedList();
         list.printList();
+
     }
 
 }
