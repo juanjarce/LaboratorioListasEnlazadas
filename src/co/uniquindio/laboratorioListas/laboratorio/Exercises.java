@@ -1,6 +1,7 @@
 package co.uniquindio.laboratorioListas.laboratorio;
 
 
+import co.uniquindio.laboratorioListas.listas.CircularLinkedList;
 import co.uniquindio.laboratorioListas.listas.DoubleLinkedList;
 import co.uniquindio.laboratorioListas.listas.LinkedList;
 import co.uniquindio.laboratorioListas.model.People;
@@ -20,9 +21,20 @@ public class Exercises {
         numberList.addLast(4);
         numberList.addLast(5);
 
+        LinkedList<Integer> numberList2 = new LinkedList<>();
+        numberList2.addLast(6);
+        numberList2.addLast(7);
+        numberList2.addLast(8);
+        numberList2.addLast(9);
+        numberList2.addLast(10);
+
         //The simple linked list with numbers is shown in the console
         System.out.println("Numbers List: ");
         numberList.printList();
+
+        //The simple linked list with numbers is shown in the console
+        System.out.println("Numbers List 2: ");
+        numberList2.printList();
 
         LinkedList<People> peopleList = new LinkedList<>();
         // Adding people to the list
@@ -121,6 +133,27 @@ public class Exercises {
         System.out.println("The people with even number of digits on their ID of the doybly linked list is: ");
         ArrayList<People> result8 = getPeopleEvenID(peopleDoublyList);
         System.out.println(result8);
+
+        //9. Write the insert and search method of a circular list
+        System.out.println(" ");
+        System.out.println("9. Write the insert and search method of a circular list.");
+        circularLinkedListMethodsTest();
+
+        //10. Write a method that allows “concatenating” two simple linked lists, the method must
+        //receive as parameters two objects of type List, join them and return a list that contains
+        //to both.
+        System.out.println(" ");
+        System.out.println("10. Write a method that allows “concatenating” two simple linked lists, the method must\n" +
+                "receive as parameters two objects of type List, join them and return a list that contains\n" +
+                "to both.");
+        System.out.println("The actual number list is: ");
+        numberList.printList();
+        System.out.println("The actual number list 2 is: ");
+        numberList2.printList();
+        concatLinkedList(numberList, numberList2);
+        System.out.println("The final number list is: ");
+        numberList.printList();
+
     }
 
     //1. Get the numbers in the odd positions of a simple linked list of numbers
@@ -231,5 +264,33 @@ public class Exercises {
         return evenID;
     }
 
-    //9. Write the insert and search method of a circular list.
+    //9. Write the insert and search method of a circular list
+    // Method for insert on CircularLinkedList on class CircularLinkedList
+    // Method for search on CircularLinkedList on class CircularLinkedList
+    // Method for testing
+    public static void circularLinkedListMethodsTest(){
+        CircularLinkedList<Integer> list = new CircularLinkedList<>();
+
+        // Add elements to the circular linked list
+        list.addFirst(1);
+        list.addFirst(2);
+        list.addFirst(3);
+
+        //Test for insert method
+        list.insert(4, 2);
+
+        //Print the list
+        list.printList();
+
+        //Test for search method
+        int p = list.search(4);
+        System.out.println("The position of the value: "+"4"+" is: "+p);
+    }
+
+    //10. Write a method that allows “concatenating” two simple linked lists, the method must
+    //receive as parameters two objects of type List, join them and return a list that contains
+    //to both.
+    public static <T extends Comparable<T>> void concatLinkedList(LinkedList<T> list1, LinkedList<T> list2){
+        list1.concat(list2);
+    }
 }

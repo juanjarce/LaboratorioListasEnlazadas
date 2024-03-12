@@ -11,26 +11,26 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
         this.size = 0;
     }
 
-    // Método para agregar un elemento al inicio de la lista
+    // Method to add an element at the beginning of the list
     public void addFirst(T value) {
         Node<T> newNode = new Node<>(value);
         if (isEmpty()) {
-            newNode.next = newNode; // Hace que el siguiente del nuevo nodo apunte a sí mismo
-            head = newNode; // La cabeza apunta al nuevo nodo
+            newNode.next = newNode; // Makes the next of the new node point to itself
+            head = newNode; // Head points to the new node
         } else {
-            newNode.next = head.next; // Establece el siguiente del nuevo nodo como el siguiente de la cabeza
-            head.next = newNode; // Establece el siguiente de la cabeza como el nuevo nodo
+            newNode.next = head.next; // Sets the next of the new node as the next of the head
+            head.next = newNode; // Sets the next of the head as the new node
         }
         size++;
     }
 
-    // Método para agregar un elemento al final de la lista
+    // Method to add an element at the end of the list
     public void addLast(T value) {
-        addFirst(value); // Simplemente llamamos a addFirst ya que estamos agregando al final de una lista circular
-        head = head.next; // Mueve la cabeza al nuevo nodo agregado
+        addFirst(value); // Simply call addFirst as we are adding to the end of a circular list
+        head = head.next; // Moves the head to the newly added node
     }
 
-    // Método para agregar un elemento en una posición específica
+    // Method to add an element at a specific position
     public void add(T value, int position) {
         if (position < 0 || position > size) {
             System.out.println("Invalid position");
@@ -54,9 +54,9 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
         size++;
     }
 
-    // Método para obtener el valor de un nodo en una posición específica
-    public T obtenerValorNodo(int position) {
-        if (!indiceValido(position)) {
+    // Method to get the value of a node at a specific position
+    public T getNodeValue(int position) {
+        if (!isValidIndex(position)) {
             System.out.println("Invalid position");
             return null;
         }
@@ -67,9 +67,9 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
         return current.value;
     }
 
-    // Método para obtener el nodo en una posición específica
-    public Node<T> obtenerNodo(int position) {
-        if (!indiceValido(position)) {
+    // Method to get the node at a specific position
+    public Node<T> getNode(int position) {
+        if (!isValidIndex(position)) {
             System.out.println("Invalid position");
             return null;
         }
@@ -80,8 +80,8 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
         return current;
     }
 
-    // Método para obtener la posición de un nodo dado su valor
-    public int obtenerPosicionNodo(T value) {
+    // Method to get the position of a node given its value
+    public int getNodePosition(T value) {
         int position = 0;
         Node<T> current = head.next;
         while (current != head) {
@@ -91,21 +91,16 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
             current = current.next;
             position++;
         }
-        return -1; // Indica que el valor no fue encontrado
+        return -1; // Indicates that the value was not found
     }
 
-    // Método para verificar si un índice es válido
-    private boolean indiceValido(int indice) {
-        return indice >= 0 && indice < size;
-    }
-
-    // Método para verificar si la lista está vacía
-    public boolean estaVacia() {
+    // Method to check if the list is empty
+    public boolean isEmpty() {
         return size == 0;
     }
 
-    // Método para eliminar el primer nodo de la lista
-    public void eliminarPrimero() {
+    // Method to delete the first node of the list
+    public void deleteFirst() {
         if (isEmpty()) {
             System.out.println("List is empty");
             return;
@@ -114,8 +109,8 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
         size--;
     }
 
-    // Método para eliminar el último nodo de la lista
-    public void eliminarUltimo() {
+    // Method to delete the last node of the list
+    public void deleteLast() {
         if (isEmpty()) {
             System.out.println("List is empty");
             return;
@@ -129,8 +124,8 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
         size--;
     }
 
-    // Método para eliminar un nodo dado su valor
-    public void eliminar(T value) {
+    // Method to delete a node given its value
+    public void delete(T value) {
         if (isEmpty()) {
             System.out.println("List is empty");
             return;
@@ -149,9 +144,9 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
         System.out.println("Value not found");
     }
 
-    // Método para modificar el valor de un nodo en una posición específica
-    public void modificarNodo(int position, T newValue) {
-        if (!indiceValido(position)) {
+    // Method to modify the value of a node at a specific position
+    public void modifyNode(int position, T newValue) {
+        if (!isValidIndex(position)) {
             System.out.println("Invalid position");
             return;
         }
@@ -162,10 +157,10 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
         current.value = newValue;
     }
 
-    // Método para ordenar la lista
-    public void ordenarLista() {
+    // Method to sort the list
+    public void sortList() {
         if (isEmpty() || size == 1) {
-            return; // Lista ya está ordenada o vacía
+            return; // List is already sorted or empty
         }
         for (int i = 0; i < size - 1; i++) {
             Node<T> current = head.next;
@@ -180,8 +175,8 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
         }
     }
 
-    // Método para imprimir la lista
-    public void imprimirLista() {
+    // Method to print the list
+    public void printList() {
         if (isEmpty()) {
             System.out.println("List is empty");
             return;
@@ -194,19 +189,18 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
         System.out.println();
     }
 
-    // Método para borrar toda la lista
-    public void borrarLista() {
+    // Method to delete the entire list
+    public void deleteList() {
         head.next = null;
         size = 0;
     }
 
-    // Método para verificar si la lista está vacía
-    public boolean isEmpty() {
-        return head == null;
+    // Method to check if an index is valid
+    private boolean isValidIndex(int index) {
+        return index >= 0 && index < size;
     }
 
-
-    // Implementación del método iterator de la interfaz Iterable
+    // Implementation of the iterator method of the Iterable interface
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
@@ -231,7 +225,7 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // Methods for Laboratory
 
-    //Method (insert)
+    // Method (insert)
     public void insert(T value, int position) {
         if (position < 0 || position > size) {
             System.out.println("Invalid position");
@@ -255,9 +249,9 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
         size++;
     }
 
-    //Method (search)
-    //Return the position of the node
-    //If the node isin´t on the list returns -1
+    // Method (search)
+    // Return the position of the node
+    // If the node isn't on the list returns -1
     public int search(T value) {
         int position = 0;
         Node<T> current = head.next;
@@ -268,7 +262,7 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
             current = current.next;
             position++;
         }
-        return -1; // Indica que el valor no fue encontrado
+        return -1; // Indicates that the value was not found
     }
 
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -277,82 +271,77 @@ public class CircularLinkedList<T extends Comparable<T>> implements Iterable<T> 
     public static void main(String[] args) {
         CircularLinkedList<Integer> list = new CircularLinkedList<>();
 
-        // Prueba de agregar al inicio
+        // Test adding at the beginning
         list.addFirst(1);
         list.addFirst(2);
         list.addFirst(3);
-        // Debería imprimir: 3 2 1
-        System.out.println("Lista después de agregar al inicio:");
-        list.imprimirLista();
+        // Should print: 3 2 1
+        System.out.println("List after adding at the beginning:");
+        list.printList();
 
-        // Prueba de agregar al final
+        // Test adding at the end
         list.addLast(4);
         list.addLast(5);
-        // Debería imprimir: 3 2 1 4 5
-        System.out.println("Lista después de agregar al final:");
-        list.imprimirLista();
+        // Should print: 3 2 1 4 5
+        System.out.println("List after adding at the end:");
+        list.printList();
 
-        // Prueba de agregar en una posición específica
+        // Test adding at a specific position
         list.add(6, 2);
-        // Debería imprimir: 3 2 6 1 4 5
-        System.out.println("Lista después de agregar en la posición 2:");
-        list.imprimirLista();
+        // Should print: 3 2 6 1 4 5
+        System.out.println("List after adding at position 2:");
+        list.printList();
 
-        // Prueba de obtener el valor de un nodo en una posición específica
-        System.out.println("Valor del nodo en la posición 3: " + list.obtenerValorNodo(3));
+        // Test getting the value of a node at a specific position
+        System.out.println("Value of the node at position 3: " + list.getNodeValue(3));
 
-        // Prueba de obtener el nodo en una posición específica
-        System.out.println("Nodo en la posición 2: " + list.obtenerNodo(2).value);
+        // Test getting the node at a specific position
+        System.out.println("Node at position 2: " + list.getNode(2).value);
 
-        // Prueba de obtener la posición de un nodo dado su valor
-        System.out.println("Posición del nodo con valor 6: " + list.obtenerPosicionNodo(6));
+        // Test getting the position of a node given its value
+        System.out.println("Position of the node with value 6: " + list.getNodePosition(6));
 
-        // Prueba de verificar si la lista está vacía
-        System.out.println("¿La lista está vacía? " + list.estaVacia());
+        // Test checking if the list is empty
+        System.out.println("Is the list empty? " + list.isEmpty());
 
-        // Prueba de eliminar el primer nodo de la lista
-        list.eliminarPrimero();
-        // Debería imprimir: 2 6 1 4 5
-        System.out.println("Lista después de eliminar el primer nodo:");
-        list.imprimirLista();
+        // Test deleting the first node of the list
+        list.deleteFirst();
+        // Should print: 2 6 1 4 5
+        System.out.println("List after deleting the first node:");
+        list.printList();
 
-        // Prueba de eliminar el último nodo de la lista
-        list.eliminarUltimo();
-        // Debería imprimir: 2 6 1 4
-        System.out.println("Lista después de eliminar el último nodo:");
-        list.imprimirLista();
+        // Test deleting the last node of the list
+        list.deleteLast();
+        // Should print: 2 6 1 4
+        System.out.println("List after deleting the last node:");
+        list.printList();
 
-        // Prueba de eliminar un nodo dado su valor
-        list.eliminar(1);
-        // Debería imprimir: 2 6 4
-        System.out.println("Lista después de eliminar el nodo con valor 1:");
-        list.imprimirLista();
+        // Test deleting a node given its value
+        list.delete(1);
+        // Should print: 2 6 4
+        System.out.println("List after deleting the node with value 1:");
+        list.printList();
 
-        // Prueba de modificar el valor de un nodo en una posición específica
-        list.modificarNodo(1, 10);
-        // Debería imprimir: 2 10 4
-        System.out.println("Lista después de modificar el nodo en la posición 1:");
-        list.imprimirLista();
+        // Test modifying the value of a node at a specific position
+        list.modifyNode(1, 10);
+        // Should print: 2 10 4
+        System.out.println("List after modifying the node at position 1:");
+        list.printList();
 
-        // Prueba de ordenar la lista
+        // Test sorting the list
         list.addFirst(7);
         list.addFirst(3);
-        list.ordenarLista();
-        // Debería imprimir: 2 3 4 7 10
-        System.out.println("Lista después de ordenar:");
-        list.imprimirLista();
+        list.sortList();
+        // Should print: 2 3 4 7 10
+        System.out.println("List after sorting:");
+        list.printList();
 
-//        // Prueba de borrar toda la lista
-//        list.borrarLista();
-//        // Debería imprimir: Lista está vacía
-//        System.out.println("Lista después de borrar toda la lista:");
-//        list.imprimirLista();
-
+        // Test using iterator
         Iterator<Integer> iterator = list.iterator();
         while (iterator.hasNext()){
-            System.out.println("Elemento: "+iterator.next());
+            System.out.println("Element: "+iterator.next());
         }
-
     }
-
 }
+
+
